@@ -3,11 +3,14 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import os
+import matplotlib.font_manager as fm
+plt.rcParams['font.family'] = 'Segoe UI Emoji'
 
 # Load CSV
 FILENAME = "gpu_synthetic_user_data.csv"
 assert os.path.exists(FILENAME), f"File '{FILENAME}' not found."
-
+# Create output directory if it doesn't exist
+os.makedirs("Observations", exist_ok=True)
 df = pd.read_csv(FILENAME)
 print("✅ Dataset loaded with shape:", df.shape)
 
@@ -47,7 +50,7 @@ plt.figure(figsize=(10, 6))
 sns.heatmap(corr, annot=True, fmt=".2f", cmap="coolwarm")
 plt.title("🔗 Correlation Heatmap")
 plt.tight_layout()
-plt.savefig("correlation_heatmap.png")
+plt.savefig("Observations/correlation_heatmap.png")
 print("✅ Saved heatmap as 'correlation_heatmap.png'")
 
 # Device vs Dropoff
@@ -55,14 +58,14 @@ plt.figure(figsize=(6, 4))
 sns.countplot(data=df, x="Device_Type", hue="Is_Dropoff")
 plt.title("📱 Dropoff by Device Type")
 plt.tight_layout()
-plt.savefig("dropoff_by_device.png")
+plt.savefig("Observations/dropoff_by_device.png")
 
 # Acquisition Source vs Dropoff
 plt.figure(figsize=(6, 4))
 sns.countplot(data=df, x="Acquisition_Source", hue="Is_Dropoff")
 plt.title("🌐 Dropoff by Acquisition Source")
 plt.tight_layout()
-plt.savefig("dropoff_by_source.png")
+plt.savefig("Observations/dropoff_by_source.png")
 
 # Boxplots for selected features
 important_features = ["Num_Sessions_7Days", "Avg_Session_Duration", "Features_Used_Count", "Time_To_First_Activity"]
@@ -72,7 +75,7 @@ for feature in important_features:
     sns.boxplot(data=df, x="Is_Dropoff", y=feature)
     plt.title(f"📦 {feature} vs Dropoff")
     plt.tight_layout()
-    plt.savefig(f"{feature}_vs_dropoff.png")
+    plt.savefig(f"Observations/{feature}_vs_dropoff.png")
 
 print("📁 Saved all visualizations.")
 
