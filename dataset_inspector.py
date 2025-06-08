@@ -3,7 +3,7 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import os
-import matplotlib.font_manager as fm
+#import matplotlib.font_manager as fm
 plt.rcParams['font.family'] = 'Segoe UI Emoji'
 
 # Load CSV
